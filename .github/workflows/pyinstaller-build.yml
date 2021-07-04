@@ -94,5 +94,5 @@ jobs:
     - name: Archive Pyinstaller File
       uses: actions/upload-artifact@v2
       with:
-        name: avw-calc-linux
+        name: avw-calc-macos
         path: dist/
