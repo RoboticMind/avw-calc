@@ -24,7 +24,8 @@ jobs:
         pyinstaller --onefile avw-calc.py -n avw-calc-gui-linux
     - name: Build CLI version for Linux
       run: |
-        sed -i 's/GUI_mode = True/GUI_mode = False/ avw-calc.py' #change the line in avw-calc.py to say GUI_mode=False
+        sed -i 's/GUI_mode = True/GUI_mode = False/ avw-calc.py' 
+        #change the line in avw-calc.py to say GUI_mode=False
         pyinstaller --onefile avw-calc.py -n avw-calc-gui-linux
     - name: Generate Checksums
       run: |
