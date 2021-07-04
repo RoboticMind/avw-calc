@@ -21,11 +21,10 @@ jobs:
         pip install pyinstaller
     - name: Build GUI Version For Linux
       run: |
-        pyinstaller --onefile avw-calc.py -n avw-calc-gui-linux
-    - name: Build CLI version for Linux  #change the line in avw-calc.py to say GUI_mode=False via sed and then build again
+        pyinstaller --onefile avw-calc-gui.py -n avw-calc-gui-linux
+    - name: Build CLI version for Linux 
       run: |
-        sed -i 's/GUI_mode = True/GUI_mode = False/' avw-calc.py
-        pyinstaller --onefile avw-calc.py -n avw-calc-cli-linux
+        pyinstaller --onefile avw-calc-cli.py -n avw-calc-cli-linux
     - name: Generate Checksums
       run: |
         sha256sum dist/* > dist/sha256-checksums.txt
@@ -52,11 +51,10 @@ jobs:
         pip install pyinstaller
     - name: Build GUI Version For Windows
       run: |
-        pyinstaller --onefile avw-calc.py -n avw-calc-gui-windows
+        pyinstaller --onefile avw-calc-gui.py -n avw-calc-gui-windows
     - name: Build CLI version for Windows  #change the line in avw-calc.py to say GUI_mode=False and then build again
       run: |
-        Get-Content avw-calc.py | % { $_ -Replace 'GUI_mode = True', 'GUI_mode = False' } |  Set-Content avw-calc.py
-        pyinstaller --onefile avw-calc.py -n avw-calc-cli-windows
+        pyinstaller --onefile avw-calc-cli.py -n avw-calc-cli-windows
     - name: Generate Checksums
       run: |
         sha256sum dist/* > dist/sha256-checksums.txt
@@ -83,11 +81,10 @@ jobs:
         pip install pyinstaller
     - name: Build GUI Version For MacOS
       run: |
-        pyinstaller --onefile avw-calc.py -n avw-calc-gui-macos-untested
-    - name: Build CLI version for MacOS  #change the line in avw-calc.py to say GUI_mode=False via sed and then build again
+        pyinstaller --onefile avw-calc-gui.py -n avw-calc-gui-macos-untested
+    - name: Build CLI version for MacOS
       run: |
-        sed -i 's/GUI_mode = True/GUI_mode = False/' avw-calc.py
-        pyinstaller --onefile avw-calc.py -n avw-calc-cli-macos-untested
+        pyinstaller --onefile avw-calc-cli.py -n avw-calc-cli-macos-untested
     - name: Generate Checksums
       run: |
         sha256sum dist/* > dist/sha256-checksums.txt
