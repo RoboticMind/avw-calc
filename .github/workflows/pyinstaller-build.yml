@@ -12,18 +12,25 @@ jobs:
     - name: Set up Python 3.9
       uses: actions/setup-python@v2
       with:
-        python-version: 3.7 #use older python version so that
+        python-version: 3.7 #use older python version so that it has easier GLIBC requirements
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        sudo apt-get install -y make gcc libgtk-3-dev libwebkitgtk-dev libwebkitgtk-3.0-dev libgstreamer-gl1.0-0 freeglut3 freeglut3-dev libglib2.0-dev ubuntu-restricted-extras libgstreamer-plugins-base1.0-dev
+        pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04 wxPython
         pip install -r requirements.txt -v
         pip install pyinstaller
-    - name: Build For Linux
+    - name: Build GUI Version For Linux
       run: |
         pyinstaller --onefile avw-calc.py -n avw-calc-gui-linux
+    - name: Build CLI version for Linux
+      run: |
+        sed -i 's/GUI_mode = True/GUI_mode = False/ avw-calc.py' #change the line in avw-calc.py to say GUI_mode=False
+        pyinstaller --onefile avw-calc.py -n avw-calc-gui-linux
+    - name: Generate Checksums
+      run: |
+        sha256sum dist/* > dist/sha256-checksums.txt
     - name: Archive Pyinstaller File
       uses: actions/upload-artifact@v2
       with:
         name: avw-calc-gui-linux
-        path: dist/avw-calc-gui-linux
+        path: dist/
