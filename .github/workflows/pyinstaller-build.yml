@@ -85,9 +85,6 @@ jobs:
     - name: Build CLI version for MacOS
       run: |
         pyinstaller --onefile avw-calc-cli.py -n avw-calc-cli-macos-untested
-    - name: Generate Checksums
-      run: |
-        sha256sum dist/* > dist/sha256-checksums.txt
     - name: Archive Pyinstaller File
       uses: actions/upload-artifact@v2
       with:
