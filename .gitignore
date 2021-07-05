@@ -1,0 +1,11 @@
+#IDE
+.vscode
+
+#Pyinstaller Build Output
+dist/*
+build/*
+*.spec
+
+#Python Output/Other Python Tools
+__pycache__/*
+.mypy_cache/*
