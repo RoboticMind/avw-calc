@@ -9,7 +9,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Python 3.9
+    - name: Set up Python
       uses: actions/setup-python@v2
       with:
         python-version: 3.7 #use older python version so that it has easier GLIBC requirements
@@ -40,7 +40,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Python 3.9
+    - name: Set up Python
       uses: actions/setup-python@v2
       with:
         python-version: 3.7 #keep the same as the linux version for consistency
@@ -70,7 +70,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Python 3.9
+    - name: Set up Python
       uses: actions/setup-python@v2
       with:
         python-version: 3.7 #use older python version so that it has easier GLIBC requirements
@@ -81,10 +81,10 @@ jobs:
         pip install pyinstaller
     - name: Build GUI Version For MacOS
       run: |
-        pyinstaller --onefile --windowed avw-calc-gui.py -n avw-calc-gui-macos-untested
+        pyinstaller --onefile --windowed --noupx avw-calc-gui.py -n avw-calc-gui-macos-untested
     - name: Build CLI version for MacOS
       run: |
-        pyinstaller --onefile --console avw-calc-cli.py -n avw-calc-cli-macos-untested
+        pyinstaller --onefile --console --noupx avw-calc-cli.py -n avw-calc-cli-macos-untested
     - name: Archive Pyinstaller File
       uses: actions/upload-artifact@v2
       with:
