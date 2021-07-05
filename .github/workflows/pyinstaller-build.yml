@@ -21,10 +21,10 @@ jobs:
         pip install pyinstaller
     - name: Build GUI Version For Linux
       run: |
-        pyinstaller --onefile avw-calc-gui.py -n avw-calc-gui-linux
+        pyinstaller --onefile --windowed avw-calc-gui.py -n avw-calc-gui-linux
     - name: Build CLI version for Linux 
       run: |
-        pyinstaller --onefile avw-calc-cli.py -n avw-calc-cli-linux
+        pyinstaller --onefile --console avw-calc-cli.py -n avw-calc-cli-linux 
     - name: Generate Checksums
       run: |
         sha256sum dist/* > dist/sha256-checksums.txt
@@ -51,10 +51,10 @@ jobs:
         pip install pyinstaller
     - name: Build GUI Version For Windows
       run: |
-        pyinstaller --onefile avw-calc-gui.py -n avw-calc-gui-windows
+        pyinstaller --onefile --windowed avw-calc-gui.py -n avw-calc-gui-windows
     - name: Build CLI version for Windows  #change the line in avw-calc.py to say GUI_mode=False and then build again
       run: |
-        pyinstaller --onefile avw-calc-cli.py -n avw-calc-cli-windows
+        pyinstaller --onefile --console avw-calc-cli.py -n avw-calc-cli-windows
     - name: Generate Checksums
       run: |
         sha256sum dist/* > dist/sha256-checksums.txt
@@ -81,10 +81,10 @@ jobs:
         pip install pyinstaller
     - name: Build GUI Version For MacOS
       run: |
-        pyinstaller --onefile avw-calc-gui.py -n avw-calc-gui-macos-untested
+        pyinstaller --onefile --windowed avw-calc-gui.py -n avw-calc-gui-macos-untested
     - name: Build CLI version for MacOS
       run: |
-        pyinstaller --onefile avw-calc-cli.py -n avw-calc-cli-macos-untested
+        pyinstaller --onefile --console avw-calc-cli.py -n avw-calc-cli-macos-untested
     - name: Archive Pyinstaller File
       uses: actions/upload-artifact@v2
       with:
