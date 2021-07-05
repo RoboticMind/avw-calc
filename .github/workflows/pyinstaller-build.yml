@@ -78,12 +78,10 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-        pip install pyinstaller
-        brew install upx
+        pip install py2app pyinstaller
     - name: Build GUI Version For MacOS
       run: |
-        pyinstaller --onefile --windowed --noupx avw-calc-gui.py -n avw-calc-gui-macos-untested
-        upx -d "${pwd}/dist/avw-calc-gui-macos-untested"
+        py2applet avw-calc-gui.py
     - name: Build CLI version for MacOS
       run: |
         pyinstaller --onefile --console --noupx avw-calc-cli.py -n avw-calc-cli-macos-untested
