@@ -1,0 +1,65 @@
+name: Pyinstaller Build
+
+on: [workflow_dispatch]
+
+jobs:
+  build-linux:
+
+    runs-on: ubuntu-18.04
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.7 #use older python version so that it has easier GLIBC requirements
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04 wxPython
+        pip install -r requirements.txt
+        pip install pyinstaller
+    - name: Build GUI Version For Linux
+      run: |
+        pyinstaller --onefile --windowed avw-calc-gui.py -n avw-calc-gui-linux
+    - name: Build CLI version for Linux 
+      run: |
+        pyinstaller --onefile --console avw-calc-cli.py -n avw-calc-cli-linux 
+    - name: Generate Checksums
+      run: |
+        sha256sum dist/* > dist/sha256-checksums.txt
+    - name: Archive Pyinstaller File
+      uses: actions/upload-artifact@v2
+      with:
+        name: avw-calc-linux
+        path: dist/
+
+  build-windows:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.7 #keep the same as the linux version for consistency
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pyinstaller
+    - name: Build GUI Version For Windows
+      run: |
+        pyinstaller --onefile --windowed avw-calc-gui.py -n avw-calc-gui-windows
+    - name: Build CLI version for Windows  #change the line in avw-calc.py to say GUI_mode=False and then build again
+      run: |
+        pyinstaller --onefile --console avw-calc-cli.py -n avw-calc-cli-windows
+    - name: Generate Checksums
+      run: |
+        sha256sum dist/* > dist/sha256-checksums.txt
+    - name: Archive Pyinstaller File
+      uses: actions/upload-artifact@v2
+      with:
+        name: avw-calc-windows
+        path: dist/

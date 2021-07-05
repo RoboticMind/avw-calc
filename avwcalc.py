@@ -1,9 +1,6 @@
 import rpc
 import argparse
-from gooey import Gooey
 import sys
-
-GUI_mode = True
 
 #for fancier formatting and so total_steps can be more easily changed
 #also works more nicely with a regex for Gooey's progress bar
@@ -17,7 +14,7 @@ def inclusive_range(start:int,stop:int,step:int) -> range:
     return range(start,stop+step,step)
 
 
-def main():
+def main(GUI_mode:bool):
     parser = argparse.ArgumentParser(description="Find the % of AVW of most v2 polls")
     
     if GUI_mode:
@@ -34,14 +31,14 @@ def main():
     parser.add_argument("rpc_username", type=str, metavar=rpc_username_label, help="Your RPC username as it is in your config")
     parser.add_argument("rpc_password", type=str, metavar=rpc_password_label, help="Your RPC password as it is in your config")
     parser.add_argument("poll_id",      type=str, metavar=poll_id_label,      help="The ID of the poll. You can find this by using the listpolls RPC command or by using a blockchain explorer like Gridcoinstats.eu")
-    parser.add_argument("-rpc_port",    type=int, metavar=rpc_port_label,     help="RPC port if set to be different from the default of 15715"   , default=15715, nargs="?")
+    parser.add_argument("-rpc_port",    type=int, metavar=rpc_port_label,     help="RPC port if set to be different from the default of 15715", default=15715, nargs="?")
     args = parser.parse_args()
 
     #give nicer names after parsing
-    poll_id:str      = args.poll_id
-    rpc_password:str = args.rpc_password
-    rpc_username:str = args.rpc_username
-    rpc_port:int     = args.rpc_port
+    poll_id:str          = args.poll_id
+    rpc_password:str     = args.rpc_password
+    rpc_username:str     = args.rpc_username
+    rpc_port:int         = args.rpc_port
 
     #attempt to open RPC connection
     rpc_caller = rpc.RPC(rpc_username, rpc_password, rpc_port)
@@ -170,46 +167,3 @@ def main():
     print("% of AVW is " + str(voteweight/avw * 100))
 
     print("----------")
-
-
-if GUI_mode:
-    #apply decorator (just without the @)
-    main = Gooey(
-        main,
-        program_name="AVW Calculator",
-        default_size=(610, 700), #slightly taller for longer output and showing optional arguments without scrolling
-        
-        progress_regex=r"step (?P<current>\d+)/(?P<total>\d+)$", #get current and total steps
-        progress_expr="(current-1) / total * 100", #subtract 1 so it doesn't show as 100% at the last step
-        
-        menu=[
-            {"name": "Help With RPC Setup",
-             "items": [{"type": "MessageDialog",
-                        "menuTitle": "How to Setup RPC",
-                        "message": ("First, go to your config file (Settings-> open config file) and add the following lines:\n\n"
-                                    + "server=1\n"
-                                    + "rpcallowip=127.0.0.1\n"
-                                    + "rpcuser=<USERNAME>\n"
-                                    + "rpcpassword=<PASSWORD>\n\n"
-                                    + "Make sure to replace the values in <>. Use that username and password as the RPC Username and RPC Password in this program."
-                                    + "Now restart your wallet and when it boots up, you should be able to run this program now"
-                                    )
-                        }
-                       ]
-             },
-            {"name": "About AVW",
-             "items": [
-                 {"type": "MessageDialog",
-                  "menuTitle": "Brief Info About AVW",
-                  "message": "AVW (active vote weight) is a measure of the amount of vote weight. All polls but option/casual polls much get a certain % of AVW for their results to count"
-                  },
-                 {"type": "Link",
-                  "menuTitle": "Relevent Wiki Page",
-                  "url": "https://gridcoin.us/wiki/voting.html"
-                  }
-             ]
-             },
-        ]
-    )
-
-main()
