@@ -2,9 +2,9 @@
 Find the % of AVW of many different polls on the Gridcoin network. Works entirely
 through running RPC commands on your wallet. 
 
-Read [about the setup here](#setup). 
+Want to know how to run this? Look at [the setup section here](#setup). 
 
-Read more informatoin about what AVW is at [this section](#what-is-avw)
+Want to know more about what AVW is? Read the [what is AVW section](#what-is-avw)
 
 # Screenshots of the GUI Version
 
@@ -15,7 +15,7 @@ Read more informatoin about what AVW is at [this section](#what-is-avw)
 # Setup
 
 1. Download the program
-    * Either use the binaries in the [release tab](https://github.com/RoboticMind/avw-calc/releases) or follow the How to Run From Python section below
+    * Either use the binaries in the [release tab](https://github.com/RoboticMind/avw-calc/releases) or follow the [How to Run From Python section](#how-to-run-from-python) below
     
 2. Open the Gridcoin wallet and click Setting then Edit config. Add the following lines replacing things in `<>` with values:
 ```
